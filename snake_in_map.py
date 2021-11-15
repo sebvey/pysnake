@@ -13,7 +13,7 @@ with open(world_path, 'r') as file:
 
 
 # Visual Features
-snake_color = (0, 153, 51)
+snake_color = (255, 80, 80)
 back_color = (60, 60, 60)
 block_color = (255, 255, 255)
 food_color = (255, 51, 153)
@@ -41,9 +41,8 @@ growing_snake = False # Passed to True when snake has to grow
 # Player Score and rewards
 wall_reward = -100
 food_reward = 20
-prox_reward = 1
-
-player_score = 0
+reward = 0
+reward_alpha = 0
 
 ## PYGAME
 
@@ -93,6 +92,17 @@ def draw_snake():
             dis, snake_color,
             [block[0] * block_size, block[1] * block_size, block_size, block_size]
         )
+
+def draw_reward():
+
+    reward_font = pygame.font.SysFont("comicsansms", 35)
+
+    txt_surface = reward_font.render("Reward :", True,msg_color)
+    dis.blit(txt_surface, [50, 50])
+
+    reward_surface = reward_font.render(str(reward), True,msg_color)
+    reward_surface.set_alpha(reward_alpha)
+    dis.blit(reward_surface, [50, 80])
 
 
 def add_food():
@@ -161,7 +171,8 @@ while not game_over:
 
         world[snake[-1][1]][snake[-1][0]] = ' '   # Delete food on world
         growing_snake = True                      # Will grow the snake
-        player_score += food_reward
+        reward = food_reward
+        reward_alpha = 255
 
         add_food()
 
@@ -178,17 +189,26 @@ while not game_over:
     dis.fill(back_color)
     draw_world()
     draw_snake()
+    draw_reward()
 
     pygame.display.update()
 
     # Time delta between two steps
     clock.tick(10)
 
+    # Reward fade
+    if reward_alpha > 15 :
+        reward_alpha -= 15
+    else :
+        reward_alpha = 0
+
+# Draws 'You Lost'
 font_style = pygame.font.SysFont(None, 50)
 msg = font_style.render('You lost !', True, msg_color)
 dis.blit(msg, [dis_width / 2, dis_height / 2])
 pygame.display.update()
 time.sleep(1)
 
+# Quits
 pygame.quit()
 quit()
