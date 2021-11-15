@@ -22,7 +22,7 @@ msg_color = (255, 20, 20)
 
 block_size = 15
 
-# Snake position and initial mouvement direction
+# Snake position and initial movement direction
 snake_head = [1, 1]
 
 for j, line in enumerate(world):
@@ -30,14 +30,20 @@ for j, line in enumerate(world):
         if element == 'S':
             snake_head[0], snake_head[1] = i, j
 
-snake = deque([snake_head])
+
+snake = deque([snake_head]) # Adds Head to the snake
+snake_body1 = [ snake[-1][0] - 1, snake[-1][1] ]
+snake.append(snake_body1)
 dX = [1, 0]
+growing_snake = False # Passed to True when snake has to grow
 
 
-# Player Score
-wall_score = -100
-food_score = 20
-prox_score = 1
+# Player Score and rewards
+wall_reward = -100
+food_reward = 20
+prox_reward = 1
+
+player_score = 0
 
 ## PYGAME
 
@@ -92,17 +98,35 @@ def draw_snake():
 def add_food():
 
     food_X = (
-        random.randint(0, world_width),
-        random.randint(0, world_height)
+        random.randrange(0, world_width),
+        random.randrange(0, world_height)
     )
 
-    while world[food_X[1]][food_X[0]] != ' ':
+    food_unreachable = world[food_X[1]][food_X[0]] != ' '
+    food_on_snake = [food_X[0],food_X[1]] in snake
+
+
+    # Regenerate the food as long as unreachable or on the snake
+    while food_unreachable or food_on_snake :
+
         food_X = (
-            random.randint(0, world_width),
-            random.randint(0, world_height)
+            random.randrange(0, world_width),
+            random.randrange(0, world_height)
         )
 
+        food_unreachable = world[food_X[1]][food_X[0]] != ' '
+        food_on_snake = [food_X[0], food_X[1]] in snake
+
     world[food_X[1]][food_X[0]] = 'F'
+
+
+def move_snake(growing):
+
+    new_head = [ snake[-1][0] + dX[0], snake[-1][1] + dX[1] ]
+    snake.append(new_head)
+
+    if not growing:  # When snake is not growing, pop the tail
+        snake.popleft()
 
 
 game_over = False
@@ -130,20 +154,35 @@ while not game_over:
             elif event.key == pygame.K_DOWN:
                 dX = [0,1]
 
-    snake[-1][0] += dX[0]
-    snake[-1][1] += dX[1]
+    move_snake(growing_snake)
 
+    # Food Detection
+    if world[snake[-1][1]][snake[-1][0]] == 'F':
+
+        world[snake[-1][1]][snake[-1][0]] = ' '   # Delete food on world
+        growing_snake = True                      # Will grow the snake
+        player_score += food_reward
+
+        add_food()
+
+    else :
+        growing_snake = False
+
+    # Head-Wall Collision detection
     if world[snake[-1][1]][snake[-1][0]] == 'X':
         game_over = True
 
-    dis.fill(back_color)
+    # TODO : Head-Body Collision
 
     # Drawing
+    dis.fill(back_color)
     draw_world()
     draw_snake()
 
     pygame.display.update()
-    clock.tick(20)
+
+    # Time delta between two steps
+    clock.tick(10)
 
 font_style = pygame.font.SysFont(None, 50)
 msg = font_style.render('You lost !', True, msg_color)
