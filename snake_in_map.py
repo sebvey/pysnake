@@ -7,7 +7,7 @@ from collections import deque
 
 
 # We Build the World
-world_path = 'map.txt'
+world_path = 'wagon_world.txt'
 with open(world_path, 'r') as file:
     world = [[*line[:-1]] for line in file.readlines()]
 
@@ -16,9 +16,9 @@ with open(world_path, 'r') as file:
 snake_color = (255, 80, 80)
 back_color = (60, 60, 60)
 block_color = (255, 255, 255)
-food_color = (255, 51, 153)
+food_color = (204, 51, 255)
 
-msg_color = (255, 20, 20)
+msg_color = (0, 102, 204)
 
 block_size = 15
 
@@ -37,6 +37,8 @@ snake.append(snake_body1)
 dX = [1, 0]
 growing_snake = False # Passed to True when snake has to grow
 
+# Game state initialisation
+game_over = False
 
 # Player Score and rewards
 wall_reward = -100
@@ -44,11 +46,11 @@ food_reward = 20
 reward = 0
 reward_alpha = 0
 
-## PYGAME
+## PYGAME INIT
 
 pygame.init()
+clock = pygame.time.Clock()
 
-# Pygame initialisation
 world_width = max([ len(l) for l in world ])
 world_height = len(world)
 
@@ -58,6 +60,8 @@ dis_height = world_height * block_size
 dis = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.set_caption('Snake Game by sve')
 
+
+## USEFULL FUNCTIONS
 
 def draw_world():
 
@@ -95,15 +99,28 @@ def draw_snake():
 
 def draw_reward():
 
-    reward_font = pygame.font.SysFont("comicsansms", 35)
+    reward_font = pygame.font.SysFont(None, 35)
 
-    txt_surface = reward_font.render("Reward :", True,msg_color)
+    txt_surface = reward_font.render("REWARD", True,msg_color)
     dis.blit(txt_surface, [50, 50])
 
     reward_surface = reward_font.render(str(reward), True,msg_color)
     reward_surface.set_alpha(reward_alpha)
     dis.blit(reward_surface, [50, 80])
 
+def draw_end():
+    font_style = pygame.font.SysFont(None, 50)
+    msg = font_style.render('LEARN AGAIN !', True, msg_color)
+    dis.blit(msg, [dis_width / 2 - 130, dis_height - 100])
+
+def draw_all_and_pause():
+    # Draw and pause, for vidéo capture
+    dis.fill(back_color)
+    draw_world()
+    draw_snake()
+    draw_reward()
+    pygame.display.update()
+    time.sleep(10)
 
 def add_food():
 
@@ -129,7 +146,6 @@ def add_food():
 
     world[food_X[1]][food_X[0]] = 'F'
 
-
 def move_snake(growing):
 
     new_head = [ snake[-1][0] + dX[0], snake[-1][1] + dX[1] ]
@@ -138,13 +154,9 @@ def move_snake(growing):
     if not growing:  # When snake is not growing, pop the tail
         snake.popleft()
 
-
-game_over = False
-
 add_food()
 
-
-clock = pygame.time.Clock()
+# draw_all_and_pause() # Just the time to capture the screen ;-)
 
 while not game_over:
 
@@ -194,7 +206,7 @@ while not game_over:
     pygame.display.update()
 
     # Time delta between two steps
-    clock.tick(10)
+    clock.tick(20)
 
     # Reward fade
     if reward_alpha > 15 :
@@ -202,12 +214,19 @@ while not game_over:
     else :
         reward_alpha = 0
 
-# Draws 'You Lost'
-font_style = pygame.font.SysFont(None, 50)
-msg = font_style.render('You lost !', True, msg_color)
-dis.blit(msg, [dis_width / 2, dis_height / 2])
+
+# WALL COLLISION 😠
+reward = wall_reward
+reward_alpha = 255
+
+draw_world()
+draw_snake()
+draw_reward()
+draw_end()
+
+
 pygame.display.update()
-time.sleep(1)
+time.sleep(5)
 
 # Quits
 pygame.quit()
