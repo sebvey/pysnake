@@ -1,0 +1,44 @@
+..............................................
+.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
+.X                                          X.
+.X                                          X.
+.X                                          X.
+.X                                          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X                                          X.
+.X                                          X.
+.X                                          X.
+.X                                          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X                                          X.
+.X                                          X.
+.X    S                                     X.
+.X                                          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X         XXXXXXXX       XXXXXXXX          X.
+.X                                          X.
+.X                                          X.
+.X                                          X.
+.X                                          X.
+.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.
+..............................................
