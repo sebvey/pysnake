@@ -1,45 +1,19 @@
-import os
 import time
 import random
-from collections import deque
 
 import pygame
 
 from pysnake import game_features as feat
-from pysnake import drawing
+from pysnake import drawing, building
 
 
-# WORLD BUILDING
+# GAME INITIALISATION
 
-# loads the world from the txt file
+# Builds the world and the initial snake from the world txt file
+world, snake = building.build_world_and_snake(feat.WORLD_PATH)
 
-world_path = os.path.join('maps','wagon_world.txt')
-with open(world_path, 'r') as file:
-    world = [[*line[:-1]] for line in file.readlines()]
-
-
-# Snake initial position :
-# On the world map, the starting point is located
-# with a 'S' -> look for the first and place the head
-# at this point
-
-snake_head = [1, 1]
-
-for j, line in enumerate(world):
-    for i, element in enumerate(line):
-        if element == 'S':
-            snake_head[0], snake_head[1] = i, j
-            break
-
-# Snake blocks position is stored in a deque
-# Adds the head to the deque
-# Adds a second block
-
-snake = deque([snake_head])
-snake.append([snake[-1][0] - 1, snake[-1][1]])
-
-# Snake initial mouvement
-dX = [1, 0] # moving to the right
+# Snake initial mouvement (moving to the right)
+dX = [1, 0]
 
 # Defines if the snake has eaten food and have to be grown
 growing_snake = False
@@ -127,8 +101,8 @@ while not game_over:
     # Food Detection
     if world[snake[-1][1]][snake[-1][0]] == 'F':
 
-        world[snake[-1][1]][snake[-1][0]] = ' '   # Delete food on world
-        growing_snake = True                      # Will grow the snake
+        world[snake[-1][1]][snake[-1][0]] = ' '   # Deletes food on world
+        growing_snake = True                      # asks to grow the snake
         reward = food_reward
         reward_alpha = 255
 
@@ -172,8 +146,7 @@ drawing.draw_end(dis,dis_width,dis_height)
 
 
 pygame.display.update()
-time.sleep(5)
+time.sleep(4)
 
 # Quits
 pygame.quit()
-quit()
