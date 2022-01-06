@@ -1,24 +1,16 @@
 import pygame
 import time
 import random
-
 from collections import deque
+
+from pysnake import game_features as feat
 
 
 # We Build the World
-world_path = 'wagon_world.txt'
+world_path = 'maps/wagon_world.txt'
 with open(world_path, 'r') as file:
     world = [[*line[:-1]] for line in file.readlines()]
 
-
-# Visual Features
-SNAKE_COLOR = (255, 80, 80)
-BACK_COLOR = (60, 60, 60)
-BLOCK_COLOR = (255, 255, 255)
-FOOD_COLOR = (204, 51, 255)
-MSG_COLOR = (0, 102, 204)
-
-BLOCK_SIZE = 15
 
 # Snake position and initial movement direction
 snake_head = [1, 1]
@@ -52,8 +44,8 @@ clock = pygame.time.Clock()
 world_width = max([ len(l) for l in world ])
 world_height = len(world)
 
-dis_width = world_width * BLOCK_SIZE
-dis_height = world_height * BLOCK_SIZE
+dis_width = world_width * feat.BLOCK_SIZE
+dis_height = world_height * feat.BLOCK_SIZE
 
 dis = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.set_caption('Snake Game by sve')
@@ -71,8 +63,8 @@ def draw_world():
 
                 pygame.draw.rect(
                     dis,
-                    BLOCK_COLOR,
-                    [i*BLOCK_SIZE, j*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE]
+                    feat.BLOCK_COLOR,
+                    [i*feat.BLOCK_SIZE, j*feat.BLOCK_SIZE, feat.BLOCK_SIZE, feat.BLOCK_SIZE]
                 )
 
             # Food
@@ -80,8 +72,9 @@ def draw_world():
 
                 pygame.draw.rect(
                     dis,
-                    FOOD_COLOR,
-                    [i*BLOCK_SIZE, j*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE]
+                    feat.FOOD_COLOR,
+                    [i*feat.BLOCK_SIZE, j*feat.BLOCK_SIZE,
+                     feat.BLOCK_SIZE, feat.BLOCK_SIZE]
                 )
 
 def draw_snake():
@@ -91,29 +84,30 @@ def draw_snake():
     for block in snake :
 
         pygame.draw.rect(
-            dis, SNAKE_COLOR,
-            [block[0] * BLOCK_SIZE, block[1] * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE]
+            dis, feat.SNAKE_COLOR,
+            [block[0] * feat.BLOCK_SIZE, block[1] * feat.BLOCK_SIZE,
+             feat.BLOCK_SIZE, feat.BLOCK_SIZE]
         )
 
 def draw_reward():
 
     reward_font = pygame.font.SysFont(None, 35)
 
-    txt_surface = reward_font.render("REWARD", True,MSG_COLOR)
+    txt_surface = reward_font.render("REWARD", True,feat.MSG_COLOR)
     dis.blit(txt_surface, [50, 50])
 
-    reward_surface = reward_font.render(str(reward), True,MSG_COLOR)
+    reward_surface = reward_font.render(str(reward), True,feat.MSG_COLOR)
     reward_surface.set_alpha(reward_alpha)
     dis.blit(reward_surface, [50, 80])
 
 def draw_end():
     font_style = pygame.font.SysFont(None, 50)
-    msg = font_style.render('LEARN AGAIN !', True, MSG_COLOR)
+    msg = font_style.render('LEARN AGAIN !', True, feat.MSG_COLOR)
     dis.blit(msg, [dis_width / 2 - 130, dis_height - 100])
 
 def draw_all_and_pause():
     # Draw and pause, for vidéo capture
-    dis.fill(BACK_COLOR)
+    dis.fill(feat.feat.BACK_COLOR)
     draw_world()
     draw_snake()
     draw_reward()
@@ -196,7 +190,7 @@ while not game_over:
     # TODO : Head-Body Collision
 
     # Drawing
-    dis.fill(BACK_COLOR)
+    dis.fill(feat.BACK_COLOR)
     draw_world()
     draw_snake()
     draw_reward()
