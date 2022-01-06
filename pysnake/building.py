@@ -3,6 +3,16 @@ import random
 
 
 def build_world_and_snake(world_path):
+    """
+    Buids the snake object and the world object.
+
+    INPUT :
+    - world_path : path to the .txt file representing the world
+
+    OUTPUTS :
+    - world : list, Each element is a line, each line is a list of characters
+    - snake : snake blocks position (deque object)
+    """
 
     # loads the world from the txt file
     with open(world_path, 'r') as file:
@@ -35,6 +45,13 @@ def build_world_and_snake(world_path):
 
 
 def add_food(world,snake):
+    """
+    Adds food to the world.
+
+    INPUTS :
+    - world : list, Each element is a line, each line is a list of characters
+    - snake : snake blocks position (deque object)
+    """
 
     world_width = max([ len(l) for l in world ])
     world_height = len(world)
@@ -58,7 +75,8 @@ def add_food(world,snake):
 
 
 def move_snake(snake,snake_growing,dX):
-    """Moves the snake (update snake (deque)
+    """
+    Moves the snake (update snake (deque)
 
     - snake : snake blocks position (deque object)
     - snake_growing : defines if the snake has to be grown (bool)

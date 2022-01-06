@@ -10,9 +10,12 @@ def draw_world(pygame_display,world):
 
     - The input world list is structured as follow :
         * Each element is a line
-        * Each line is a list of characters
-"""
+        * Each line is a list of characters"""
 
+    # Fill the background
+    pygame_display.fill(feat.BACK_COLOR)
+
+    # For each block of the world, draws the corresponding element
     for j, line in enumerate(world):
         for i, element in enumerate(line):
 
