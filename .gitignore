@@ -18,6 +18,6 @@ __pycache__/
 *$py.class
 
 # settings, system, cache...
-.vscode/settings.json
+# .vscode/
 .ipynb_checkpoints
 .DS_Store
