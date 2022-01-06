@@ -86,5 +86,7 @@ def move_snake(snake,snake_growing,dX):
     new_head = [snake[-1][0] + dX[0], snake[-1][1] + dX[1]]
     snake.append(new_head)
 
-    if not snake_growing:  # When snake is not growing, pop the tail
+    # When snake is not growing, pop the tail
+    # Else the snake is growing, so it's kept
+    if not snake_growing:
         snake.popleft()

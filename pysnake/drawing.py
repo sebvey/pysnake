@@ -1,4 +1,5 @@
 import pygame
+import time
 
 from pysnake import features as feat
 
@@ -71,13 +72,43 @@ def draw_reward(pygame_display,reward, reward_alpha):
     pygame_display.blit(reward_surface, [50, 80])
 
 
-def draw_end(pygame_display,display_width, display_height):
+def draw_collision_end_and_quit(pygame_display,world,snake):
     """ Function drawing the end message when the game is over
 
     - pygame_display : the pygame display object
     - display_witdh / display_height : size in pixel of the display
     """
 
+    draw_world(pygame_display,world)
+    draw_snake(pygame_display,snake)
+    draw_reward(pygame_display,feat.WALL_REWARD,255)
+
+    # Ends message
+
+    world_width = max([ len(l) for l in world ])
+    world_height = len(world)
+
+    display_width = world_width * feat.BLOCK_SIZE
+    display_height = world_height * feat.BLOCK_SIZE
+
     font_style = pygame.font.SysFont(None, 50)
     msg = font_style.render('LEARN AGAIN...', True, feat.MSG_COLOR)
     pygame_display.blit(msg, [display_width / 2 - 130, display_height - 100])
+
+    # Quits
+    time.sleep(4)
+    pygame.quit()
+
+
+def draw_all(pygame_display,world,snake,reward,reward_alpha):
+
+    draw_world(pygame_display,world)
+    draw_snake(pygame_display, snake)
+    draw_reward(pygame_display, reward, reward_alpha)
+    pygame.display.update()
+
+    pygame.display.update()
+
+    # Quits
+    time.sleep(4)
+    pygame.quit()
