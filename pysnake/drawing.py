@@ -1,6 +1,6 @@
 import pygame
 
-from pysnake import game_features as feat
+from pysnake import features as feat
 
 
 def draw_world(pygame_display,world):

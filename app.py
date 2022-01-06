@@ -3,7 +3,7 @@ import random
 
 import pygame
 
-from pysnake import game_features as feat
+from pysnake import features as feat
 from pysnake import drawing, building
 
 
@@ -12,13 +12,13 @@ from pysnake import drawing, building
 # Builds the world and the initial snake from the world txt file
 world, snake = building.build_world_and_snake(feat.WORLD_PATH)
 
-# Snake initial mouvement (moving to the right)
+# Defines the snake initial mouvement (moving to the right)
 dX = [1, 0]
 
-# Defines if the snake has eaten food and have to be grown
+# Defines if the snake has eaten food and havs to be grown
 growing_snake = False
 
-# Game state initialisation
+# Game State
 game_over = False
 
 # Player Score and rewards
