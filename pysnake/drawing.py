@@ -36,7 +36,6 @@ def draw_world(pygame_display,world):
                     feat.BLOCK_SIZE
                 ])
 
-
 def draw_snake(pygame_display,snake):
     """Function drawing the snake with pysnake
 
@@ -52,7 +51,6 @@ def draw_snake(pygame_display,snake):
             [ block[0] * feat.BLOCK_SIZE, block[1] * feat.BLOCK_SIZE,
             feat.BLOCK_SIZE, feat.BLOCK_SIZE ]
         )
-
 
 def draw_text(pygame_display,score):
     """ Function drawing the text information with pygame.
@@ -79,9 +77,6 @@ def draw_text(pygame_display,score):
     restart_surface = txt_font.render("'Enter' to Restart", True, feat.MSG_COLOR)
     pygame_display.blit(restart_surface, [10, 580])
 
-
-
-
 def draw_game_over(pygame_display):
 
     reward_font = pygame.font.SysFont(None, 70)
@@ -92,7 +87,7 @@ def draw_game_over(pygame_display):
     pygame_display.blit(txt_surface, [10, 300])
 
 
-def draw_collision_end_and_quit(pygame_display,world,snake,reward):
+def draw_end(pygame_display,world,snake,reward):
     """ Function drawing the end message when the game is over
 
     - pygame_display : the pygame display object
@@ -106,10 +101,8 @@ def draw_collision_end_and_quit(pygame_display,world,snake,reward):
 
     pygame.display.update()
 
-    # Quits
-    time.sleep(4)
-    pygame.quit()
-    quit() # Quits the program
+
+
 
 
 
