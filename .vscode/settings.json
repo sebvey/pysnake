@@ -1,0 +1,7 @@
+{
+  "python.pythonPath": "/home/sve/.pyenv/versions/3.8.12/envs/lewagon/bin/python",
+  "files.exclude": {
+    "**/__pycache__": true
+  }
+
+}
