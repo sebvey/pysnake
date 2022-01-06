@@ -1,13 +1,15 @@
-import pygame
+import os
 import time
 import random
 from collections import deque
+
+import pygame
 
 from pysnake import game_features as feat
 
 
 # We Build the World
-world_path = 'maps/wagon_world.txt'
+world_path = os.path.join('maps','wagon_world.txt')
 with open(world_path, 'r') as file:
     world = [[*line[:-1]] for line in file.readlines()]
 
