@@ -1,5 +1,4 @@
 import time
-import random
 
 import pygame
 
@@ -12,19 +11,15 @@ from pysnake import drawing, building
 # Builds the world and the initial snake from the world txt file
 world, snake = building.build_world_and_snake(feat.WORLD_PATH)
 
-# Defines the snake initial mouvement (moving to the right)
-dX = [1, 0]
 
-# Defines if the snake has eaten food and havs to be grown
-growing_snake = False
+dX = [1, 0]  # Snake mouvement (initially moving to the right)
+snake_growing = False  # Defines if the snake has eaten food and has to be grown
+game_over = False  # Game State
 
-# Game State
-game_over = False
-
-# Player Score and rewards
-wall_reward = -100
-food_reward = 20
-reward = 0
+# Rewards given for the move
+wall_reward = -100 # negative reward when a wall is bumped
+food_reward = 20 # positive reward when food is eaten
+reward = 0 # last recorded reward
 reward_alpha = 0
 
 ## PYGAME INIT
@@ -42,40 +37,7 @@ dis = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.set_caption('Snake Game by sve')
 
 
-## USEFULL FUNCTIONS
-
-def add_food():
-
-    food_X = (
-        random.randrange(0, world_width),
-        random.randrange(0, world_height)
-    )
-
-    food_unreachable = world[food_X[1]][food_X[0]] != ' '
-    food_on_snake = [food_X[0],food_X[1]] in snake
-
-    # Regenerate the food as long as unreachable or on the snake
-    while food_unreachable or food_on_snake :
-
-        food_X = (
-            random.randrange(0, world_width),
-            random.randrange(0, world_height)
-        )
-
-        food_unreachable = world[food_X[1]][food_X[0]] != ' '
-        food_on_snake = [food_X[0], food_X[1]] in snake
-
-    world[food_X[1]][food_X[0]] = 'F'
-
-def move_snake(growing):
-
-    new_head = [ snake[-1][0] + dX[0], snake[-1][1] + dX[1] ]
-    snake.append(new_head)
-
-    if not growing:  # When snake is not growing, pop the tail
-        snake.popleft()
-
-add_food()
+# MAIN LOOP
 
 while not game_over:
 
@@ -95,20 +57,20 @@ while not game_over:
             elif event.key == pygame.K_DOWN:
                 dX = [0,1]
 
-    move_snake(growing_snake)
+    building.move_snake(snake, snake_growing, dX)
 
     # Food Detection
     if world[snake[-1][1]][snake[-1][0]] == 'F':
 
         world[snake[-1][1]][snake[-1][0]] = ' '   # Deletes food on world
-        growing_snake = True                      # asks to grow the snake
+        snake_growing = True                      # asks to grow the snake
         reward = food_reward
         reward_alpha = 255
 
-        add_food()
+        building.add_food(world,snake)
 
     else :
-        growing_snake = False
+        snake_growing = False
 
     # Head-Wall Collision detection
     if world[snake[-1][1]][snake[-1][0]] == 'X':
@@ -124,8 +86,7 @@ while not game_over:
 
     pygame.display.update()
 
-    # Time delta between two steps
-    clock.tick(20)
+    clock.tick(20)  # Time delta between two steps
 
     # Reward fade
     if reward_alpha > 15 :

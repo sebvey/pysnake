@@ -1,4 +1,5 @@
 from collections import deque
+import random
 
 
 def build_world_and_snake(world_path):
@@ -27,4 +28,45 @@ def build_world_and_snake(world_path):
     snake = deque([snake_head])
     snake.append([snake[-1][0] - 1, snake[-1][1]])
 
+    # Adds three food elements
+    for _ in range(3) : add_food(world,snake)
+
     return world, snake
+
+
+def add_food(world,snake):
+
+    world_width = max([ len(l) for l in world ])
+    world_height = len(world)
+
+    food_X = (random.randrange(0,
+                               world_width), random.randrange(0, world_height))
+
+    food_unreachable = world[food_X[1]][food_X[0]] != ' '
+    food_on_snake = [food_X[0], food_X[1]] in snake
+
+    # Regenerate the food as long as unreachable or on the snake
+    while food_unreachable or food_on_snake:
+
+        food_X = (random.randrange(0, world_width),
+                  random.randrange(0, world_height))
+
+        food_unreachable = world[food_X[1]][food_X[0]] != ' '
+        food_on_snake = [food_X[0], food_X[1]] in snake
+
+    world[food_X[1]][food_X[0]] = 'F'
+
+
+def move_snake(snake,snake_growing,dX):
+    """Moves the snake (update snake (deque)
+
+    - snake : snake blocks position (deque object)
+    - snake_growing : defines if the snake has to be grown (bool)
+    - dX : snake mouvement [ delta_x (int), delta_y (int) ]
+    """
+
+    new_head = [snake[-1][0] + dX[0], snake[-1][1] + dX[1]]
+    snake.append(new_head)
+
+    if not snake_growing:  # When snake is not growing, pop the tail
+        snake.popleft()
