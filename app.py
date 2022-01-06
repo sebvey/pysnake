@@ -2,6 +2,8 @@ import pygame
 
 import itertools
 
+from pygame.constants import K_q
+
 from pysnake import features as feat
 from pysnake import drawing, building
 
@@ -20,7 +22,7 @@ def init_game() :
 
     return world,snake,dX,score,snake_growing
 
-## PYGAME INIT -----------------------------------------------------------------
+## PYGAME INITIALISATION -------------------------------------------------------
 
 def init_pygame():
 
@@ -65,6 +67,13 @@ while True :
             elif event.key == pygame.K_DOWN and dX != [0,-1] :
                 dX = [0 , 1]
 
+            elif event.key == pygame.K_RETURN : # Restart the game
+                world, snake, dX, score, snake_growing = init_game()
+
+            elif event.key == K_q : # quit the game
+                pygame.quit()
+                quit()
+
     # Moves the snake
     building.move_snake(snake, snake_growing, dX)
 
@@ -77,16 +86,34 @@ while True :
 
         building.add_food(world,snake)            # Adds new food
 
-    # Detects Snake Head-to-Tail collision
+    # Snake Tail collision boolean
     snake_head = snake[-1]
     snake_tail = list(itertools.islice(snake,0,len(snake)-1))
-    if snake_head in snake_tail :
-        drawing.draw_collision_end_and_quit(display,world,snake,score)
+    tail_collision = snake_head in snake_tail
 
+    # Snake Wall collision boolean
+    wall_collision = world[snake[-1][1]][snake[-1][0]] == 'X'
 
-    # Detects Snake Head-to-Wall collision
-    if world[snake[-1][1]][snake[-1][0]] == 'X':
-        drawing.draw_collision_end_and_quit(display,world,snake,score)
+    # If collision detected, draw_end and wait for a key event
+    waiting = False
+    if tail_collision or wall_collision :
+        drawing.draw_end(display,world,snake,score)
+        waiting = True
+
+    while waiting == True :
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN : # Restart the game
+                    world, snake, dX, score, snake_growing = init_game()
+                    waiting = False
+
+                elif event.key == K_q : # quit the game
+                    pygame.quit()
+                    quit()
 
     # Draws the game with pygame
     drawing.draw_all(display,world,snake,score)
