@@ -1,5 +1,7 @@
 import pygame
 
+import itertools
+
 from pysnake import features as feat
 from pysnake import drawing, building
 
@@ -65,7 +67,10 @@ while True :
         building.add_food(world,snake)            # Adds new food
 
     # Detects Snake Head-to-Tail collision
-    if
+    snake_head = snake[-1]
+    snake_tail = list(itertools.islice(snake,0,len(snake)-1))
+    if snake_head in snake_tail :
+        drawing.draw_collision_end_and_quit(display,world,snake)
 
 
     # Detects Snake Head-to-Wall collision

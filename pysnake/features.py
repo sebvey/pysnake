@@ -1,9 +1,9 @@
 import os
 
-# World map to use
+# World Configuration
 
 WORLD_PATH = os.path.join('maps', 'wagon_world.txt')
-
+INIT_FOOD_NUMBER = 25
 
 # Visual features used to render the game
 

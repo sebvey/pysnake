@@ -41,7 +41,7 @@ def build_world_and_snake(world_path):
     snake.append([snake[-1][0] - 1, snake[-1][1]])
 
     # Adds three food elements
-    for _ in range(3) : add_food(world,snake)
+    for _ in range(feat.INIT_FOOD_NUMBER) : add_food(world,snake)
 
     return world, snake
 
