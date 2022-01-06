@@ -6,28 +6,43 @@ from collections import deque
 import pygame
 
 from pysnake import game_features as feat
+from pysnake import drawing
 
 
-# We Build the World
+# WORLD BUILDING
+
+# loads the world from the txt file
+
 world_path = os.path.join('maps','wagon_world.txt')
 with open(world_path, 'r') as file:
     world = [[*line[:-1]] for line in file.readlines()]
 
 
-# Snake position and initial movement direction
+# Snake initial position :
+# On the world map, the starting point is located
+# with a 'S' -> look for the first and place the head
+# at this point
+
 snake_head = [1, 1]
 
 for j, line in enumerate(world):
     for i, element in enumerate(line):
         if element == 'S':
             snake_head[0], snake_head[1] = i, j
+            break
 
+# Snake blocks position is stored in a deque
+# Adds the head to the deque
+# Adds a second block
 
-snake = deque([snake_head]) # Adds Head to the snake
-snake_body1 = [ snake[-1][0] - 1, snake[-1][1] ]
-snake.append(snake_body1)
-dX = [1, 0]
-growing_snake = False # Passed to True when snake has to grow
+snake = deque([snake_head])
+snake.append([snake[-1][0] - 1, snake[-1][1]])
+
+# Snake initial mouvement
+dX = [1, 0] # moving to the right
+
+# Defines if the snake has eaten food and have to be grown
+growing_snake = False
 
 # Game state initialisation
 game_over = False
@@ -54,67 +69,6 @@ pygame.display.set_caption('Snake Game by sve')
 
 
 ## USEFULL FUNCTIONS
-
-def draw_world():
-
-    for j, line in enumerate(world):
-        for i, element in enumerate(line):
-
-            # Blocks
-            if element == 'X':
-
-                pygame.draw.rect(
-                    dis,
-                    feat.BLOCK_COLOR,
-                    [i*feat.BLOCK_SIZE, j*feat.BLOCK_SIZE, feat.BLOCK_SIZE, feat.BLOCK_SIZE]
-                )
-
-            # Food
-            if element == 'F':
-
-                pygame.draw.rect(
-                    dis,
-                    feat.FOOD_COLOR,
-                    [i*feat.BLOCK_SIZE, j*feat.BLOCK_SIZE,
-                     feat.BLOCK_SIZE, feat.BLOCK_SIZE]
-                )
-
-def draw_snake():
-
-    # Snake drawing
-
-    for block in snake :
-
-        pygame.draw.rect(
-            dis, feat.SNAKE_COLOR,
-            [block[0] * feat.BLOCK_SIZE, block[1] * feat.BLOCK_SIZE,
-             feat.BLOCK_SIZE, feat.BLOCK_SIZE]
-        )
-
-def draw_reward():
-
-    reward_font = pygame.font.SysFont(None, 35)
-
-    txt_surface = reward_font.render("REWARD", True,feat.MSG_COLOR)
-    dis.blit(txt_surface, [50, 50])
-
-    reward_surface = reward_font.render(str(reward), True,feat.MSG_COLOR)
-    reward_surface.set_alpha(reward_alpha)
-    dis.blit(reward_surface, [50, 80])
-
-def draw_end():
-    font_style = pygame.font.SysFont(None, 50)
-    msg = font_style.render('LEARN AGAIN !', True, feat.MSG_COLOR)
-    dis.blit(msg, [dis_width / 2 - 130, dis_height - 100])
-
-def draw_all_and_pause():
-    # Draw and pause, for vidéo capture
-    dis.fill(feat.feat.BACK_COLOR)
-    draw_world()
-    draw_snake()
-    draw_reward()
-    pygame.display.update()
-    time.sleep(10)
 
 def add_food():
 
@@ -149,8 +103,6 @@ def move_snake(growing):
         snake.popleft()
 
 add_food()
-
-# draw_all_and_pause() # Just the time to capture the screen ;-)
 
 while not game_over:
 
@@ -193,9 +145,9 @@ while not game_over:
 
     # Drawing
     dis.fill(feat.BACK_COLOR)
-    draw_world()
-    draw_snake()
-    draw_reward()
+    drawing.draw_world(dis,world)
+    drawing.draw_snake(dis,snake)
+    drawing.draw_reward(dis,reward,reward_alpha)
 
     pygame.display.update()
 
@@ -213,10 +165,10 @@ while not game_over:
 reward = wall_reward
 reward_alpha = 255
 
-draw_world()
-draw_snake()
-draw_reward()
-draw_end()
+drawing.draw_world(dis,world)
+drawing.draw_snake(dis,snake)
+drawing.draw_reward(dis,reward,reward_alpha)
+drawing.draw_end(dis,dis_width,dis_height)
 
 
 pygame.display.update()
