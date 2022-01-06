@@ -1,6 +1,8 @@
 from collections import deque
 import random
 
+from pysnake import features as feat
+
 
 def build_world_and_snake(world_path):
     """

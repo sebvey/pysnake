@@ -17,8 +17,7 @@ MSG_COLOR = (0, 102, 204)
 BLOCK_SIZE = 15
 
 # Speed of the game
-
-GAME_STEP_DURATION = 35
+GAME_FRAMERATE = 20 # framerate (step/s)
 
 # REWARDS
 WALL_REWARD = -100  # negative reward when a wall is bumped

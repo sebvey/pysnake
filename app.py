@@ -11,7 +11,6 @@ world, snake = building.build_world_and_snake(feat.WORLD_PATH)
 
 dX = [1, 0]  # Snake mouvement (initially moving to the right)
 snake_growing = False  # Defines if the snake has eaten food and has to be grown
-game_over = False  # Game State
 
 # Rewards given for the move
 reward = 0 # last recorded reward
@@ -33,19 +32,17 @@ display = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption('Snake Game by sve')
 
 
-## MAIN LOOP -------------------------------------------------------------------
+### MAIN LOOP ------------------------------------------------------------------
 
-# - Catches events
-# - updates the world and the snake
-# - leaves the loop when a wall is collided (or game exited)
+while True :
 
-while not game_over :
-
+    # Treats pygame events (arrow keys and quit event)
     for event in pygame.event.get():
 
         # Break on QUIT event (closed window)
         if event.type == pygame.QUIT:
-            game_over = True
+            pygame.quit()
+            quit()
 
         # Updates the snake movement depending on the KEY pressed
         if event.type == pygame.KEYDOWN:
@@ -58,6 +55,7 @@ while not game_over :
     building.move_snake(snake, snake_growing, dX)
 
     # Detects if snake eats food and updates the world and states
+    snake_growing = False
     if world[snake[-1][1]][snake[-1][0]] == 'F':
         world[snake[-1][1]][snake[-1][0]] = ' '   # Deletes food on world
         snake_growing = True                      # asks to grow the snake
@@ -66,8 +64,9 @@ while not game_over :
 
         building.add_food(world,snake)            # Adds new food
 
-    else :
-        snake_growing = False
+    # Detects Snake Head-to-Tail collision
+    if
+
 
     # Detects Snake Head-to-Wall collision
     if world[snake[-1][1]][snake[-1][0]] == 'X':
@@ -76,8 +75,8 @@ while not game_over :
     # Draws the game with pygame
     drawing.draw_all(display,world,snake,reward,reward_alpha)
 
-    # Pauses between two steps of the game
-    clock.tick(feat.GAME_STEP_DURATION)
+    # Wait still next step
+    clock.tick(feat.GAME_FRAMERATE)
 
     # Updates the alpha of the display (for fading purpose)
     if reward_alpha > 15 : reward_alpha -= 15

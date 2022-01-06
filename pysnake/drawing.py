@@ -92,12 +92,16 @@ def draw_collision_end_and_quit(pygame_display,world,snake):
     display_height = world_height * feat.BLOCK_SIZE
 
     font_style = pygame.font.SysFont(None, 50)
-    msg = font_style.render('LEARN AGAIN...', True, feat.MSG_COLOR)
+    msg = font_style.render('CRASH !', True, feat.MSG_COLOR)
     pygame_display.blit(msg, [display_width / 2 - 130, display_height - 100])
+
+    pygame.display.update()
 
     # Quits
     time.sleep(4)
     pygame.quit()
+    quit() # Quits the program
+
 
 
 def draw_all(pygame_display,world,snake,reward,reward_alpha):
@@ -106,9 +110,3 @@ def draw_all(pygame_display,world,snake,reward,reward_alpha):
     draw_snake(pygame_display, snake)
     draw_reward(pygame_display, reward, reward_alpha)
     pygame.display.update()
-
-    pygame.display.update()
-
-    # Quits
-    time.sleep(4)
-    pygame.quit()
