@@ -54,7 +54,6 @@ def add_food():
     food_unreachable = world[food_X[1]][food_X[0]] != ' '
     food_on_snake = [food_X[0],food_X[1]] in snake
 
-
     # Regenerate the food as long as unreachable or on the snake
     while food_unreachable or food_on_snake :
 
