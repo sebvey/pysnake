@@ -76,12 +76,13 @@ def add_food(world,snake):
     world[food_X[1]][food_X[0]] = 'F'
 
 
-def move_snake(snake,snake_growing,dX):
+def update_snake(snake,snake_growth,dX):
     """
-    Moves the snake (update snake (deque)
+    Update the snake (move and grow)
 
+    INPUT :
     - snake : snake blocks position (deque object)
-    - snake_growing : defines if the snake has to be grown (bool)
+    - snake_growth : umber of block to add (one block added by call)
     - dX : snake mouvement [ delta_x (int), delta_y (int) ]
     """
 
@@ -89,6 +90,9 @@ def move_snake(snake,snake_growing,dX):
     snake.append(new_head)
 
     # When snake is not growing, pop the tail
-    # Else the snake is growing, so it's kept
-    if not snake_growing:
+    if not snake_growth :
         snake.popleft()
+        return 0
+
+    # Else the snake is growing, we keep the tail
+    return snake_growth - 1
