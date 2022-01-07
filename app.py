@@ -15,12 +15,17 @@ def init_game() :
     world, snake = building.build_world_and_snake(feat.WORLD_PATH)
 
     dX = [1, 0]  # Snake mouvement (initially moving to the right)
-    snake_growing = False  # Defines if the snake has eaten food and has to be grown
 
     # Score
     score = 0
 
-    return world,snake,dX,score,snake_growing
+    # Snake Growth - number of block to add
+    snake_growth = 0
+
+    print('init snake : ' + str(snake))
+    print(f'init snake_growth : {snake_growth}')
+
+    return world, snake, dX, score, snake_growth
 
 ## PYGAME INITIALISATION -------------------------------------------------------
 
@@ -43,7 +48,7 @@ def init_pygame():
 
 ### MAIN LOOP ------------------------------------------------------------------
 
-world, snake, dX, score, snake_growing = init_game()
+world, snake, dX, score, snake_growth = init_game()
 display,clock = init_pygame()
 
 while True :
@@ -68,20 +73,17 @@ while True :
                 dX = [0 , 1]
 
             elif event.key == pygame.K_RETURN : # Restart the game
-                world, snake, dX, score, snake_growing = init_game()
+                world, snake, dX, score, snake_growth = init_game()
+                print('standard enter')
 
-            elif event.key == K_q : # quit the game
+            elif event.key == pygame.K_q:  # quit the game
                 pygame.quit()
                 quit()
 
-    # Moves the snake
-    building.move_snake(snake, snake_growing, dX)
-
     # Detects if snake eats food and updates the world and states
-    snake_growing = False
     if world[snake[-1][1]][snake[-1][0]] == 'F':
         world[snake[-1][1]][snake[-1][0]] = ' '   # Deletes food on world
-        snake_growing = True                      # asks to grow the snake
+        snake_growth += feat.SNAKE_GROWTH        # asks to grow the snake
         score += feat.FOOD_REWARD                 # updates the award
 
         building.add_food(world,snake)            # Adds new food
@@ -100,7 +102,7 @@ while True :
         drawing.draw_end(display,world,snake,score)
         waiting = True
 
-    while waiting == True :
+    while waiting :
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -108,12 +110,15 @@ while True :
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN : # Restart the game
-                    world, snake, dX, score, snake_growing = init_game()
                     waiting = False
+                    world, snake, dX, score, snake_growth = init_game()
 
-                elif event.key == K_q : # quit the game
+                elif event.key == pygame.K_q:  # quit the game
                     pygame.quit()
                     quit()
+
+    # Moves the snake
+    snake_growth = building.update_snake(snake, snake_growth, dX)
 
     # Draws the game with pygame
     drawing.draw_all(display,world,snake,score)

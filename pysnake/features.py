@@ -3,7 +3,7 @@ import os
 # World Configuration
 
 WORLD_PATH = os.path.join('maps', 'wagon_world.txt')
-INIT_FOOD_NUMBER = 3
+INIT_FOOD_NUMBER = 25
 
 # Visual features used to render the game
 
@@ -17,9 +17,10 @@ GO_COLOR = (224, 150, 45)  # Game Over
 
 BLOCK_SIZE = 15
 
-# Speed of the game
-GAME_FRAMERATE = 14 # framerate (step/s)
+# Game Parameters
+GAME_FRAMERATE = 3 # speed of the game : framerate (step/s)
+SNAKE_GROWTH = 4
 
-# REWARDS
+# Rewards
 WALL_REWARD = -100  # negative reward when a wall is bumped
 FOOD_REWARD = 20  # positive reward when food is eaten

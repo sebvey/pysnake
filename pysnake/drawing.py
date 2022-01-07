@@ -52,7 +52,7 @@ def draw_snake(pygame_display,snake):
             feat.BLOCK_SIZE, feat.BLOCK_SIZE ]
         )
 
-def draw_text(pygame_display,score):
+def draw_text(pygame_display,score,game_over=False):
     """ Function drawing the text information with pygame.
 
     - pygame_display : the pygame display object
@@ -77,15 +77,13 @@ def draw_text(pygame_display,score):
     restart_surface = txt_font.render("'Enter' to Restart", True, feat.MSG_COLOR)
     pygame_display.blit(restart_surface, [10, 580])
 
-def draw_game_over(pygame_display):
+    if game_over :
+        reward_font = pygame.font.SysFont(None, 70)
 
-    reward_font = pygame.font.SysFont(None, 70)
-
-    txt_surface = reward_font.render("GAME", True, feat.GO_COLOR)
-    pygame_display.blit(txt_surface, [10, 250])
-    txt_surface = reward_font.render("OVER", True, feat.GO_COLOR)
-    pygame_display.blit(txt_surface, [10, 300])
-
+        txt_surface = reward_font.render("GAME", True, feat.GO_COLOR)
+        pygame_display.blit(txt_surface, [10, 250])
+        txt_surface = reward_font.render("OVER", True, feat.GO_COLOR)
+        pygame_display.blit(txt_surface, [10, 300])
 
 def draw_end(pygame_display,world,snake,reward):
     """ Function drawing the end message when the game is over
@@ -96,17 +94,13 @@ def draw_end(pygame_display,world,snake,reward):
 
     draw_world(pygame_display,world)
     draw_snake(pygame_display,snake)
-    draw_text(pygame_display,reward)
-    draw_game_over(pygame_display)
+    draw_text(pygame_display,reward,game_over=True)
 
     pygame.display.update()
 
 
-
-
-
-
 def draw_all(pygame_display,world,snake,reward):
+
 
     draw_world(pygame_display,world)
     draw_snake(pygame_display, snake)
