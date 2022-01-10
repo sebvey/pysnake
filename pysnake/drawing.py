@@ -85,24 +85,22 @@ def draw_text(pygame_display,score,game_over=False):
         txt_surface = reward_font.render("OVER", True, feat.GO_COLOR)
         pygame_display.blit(txt_surface, [10, 300])
 
-def draw_end(pygame_display,world,snake,reward):
+def draw_end(game):
     """ Function drawing the end message when the game is over
 
-    - pygame_display : the pygame display object
-    - display_witdh / display_height : size in pixel of the display
+    INPUT : a Game instance
     """
 
-    draw_world(pygame_display,world)
-    draw_snake(pygame_display,snake)
-    draw_text(pygame_display,reward,game_over=True)
+    draw_world(game)
+    draw_snake(game)
+    draw_text(game)
 
-    pygame.display.update()
-
-
-def draw_all(pygame_display,world,snake,reward):
+    game.pg_display.update()
 
 
-    draw_world(pygame_display,world)
-    draw_snake(pygame_display, snake)
-    draw_text(pygame_display, reward)
-    pygame.display.update()
+def draw_all(game):
+
+    draw_world(game)
+    draw_snake(game)
+    draw_text(game)
+    game.pg_display.update()

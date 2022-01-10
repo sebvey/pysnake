@@ -20,6 +20,7 @@ class Game():
         * 'U' (up)
         * 'D' (down)
 
+    - game_over : bool indicating if the game is over
     - pg_display : pygame display
     - pg_clock : pygame clock
     """
@@ -80,7 +81,7 @@ class Game():
 
     def init_game(self):
         """
-        Initializes attributes : world, snake, snake_growth, score
+        Initializes attributes : world, snake, snake_growth, score, game_over
         """
 
         # loads the world from the txt file
@@ -119,6 +120,9 @@ class Game():
 
         # Snake Growth - number of block to add
         self.snake_growth = 0
+
+        # Game State
+        self.game_over = False
 
         return self
 
@@ -233,7 +237,8 @@ class Game():
 
             if self.collision_detected() :
 
-                drawing.draw_end(self) # TODO REWORK INPUT
+                self.game_over = True
+                drawing.draw_end(self)
 
                 if self.restart_asked() :
                     self.init_game()
@@ -243,7 +248,7 @@ class Game():
                     return 1
 
             # Draws the game with pygame
-            drawing.draw_all(self) # TODO INPUT REWORK
+            drawing.draw_all(self)
 
             # Wait still next step
             self.clock.tick(feat.GAME_FRAMERATE)
