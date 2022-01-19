@@ -1,9 +1,3 @@
-import pygame
-
-import itertools
-
-from pysnake import features as feat
-from pysnake import drawing, building
 from pysnake.game import Game
 
 
@@ -13,4 +7,4 @@ game = Game()
 
 ### MAIN LOOP
 
-
+game.run()

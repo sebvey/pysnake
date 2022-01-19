@@ -28,8 +28,8 @@ class Game():
     def __init__(self,WORLD_PATH=feat.WORLD_PATH):
 
         self.WORLD_PATH = WORLD_PATH
-        self.init_pygame() # pygame specific initialisation
         self.init_game() # game state initialisation
+        self.init_pygame() # pygame specific initialisation
 
 
     def add_food(self):
@@ -58,7 +58,6 @@ class Game():
 
         self.world[food_X[1]][food_X[0]] = 'F'
 
-
     def process_food_eating(self):
         """
         Detects if snake eats food and updates :
@@ -77,11 +76,10 @@ class Game():
             self.snake_growth += feat.SNAKE_GROWTH  # asks to grow the snake
             self.score += feat.FOOD_REWARD  # updates the award
 
-
-
     def init_game(self):
         """
-        Initializes attributes : world, snake, snake_growth, score, game_over
+        Initializes attributes :
+        - world, snake, snake_growth, score, game_over, snake_dir
         """
 
         # loads the world from the txt file
@@ -113,7 +111,7 @@ class Game():
         for _ in range(feat.INIT_FOOD_NUMBER):
             self.add_food()
 
-        self.dX = 'R'  # Snake mouvement (initially moving to the right)
+        self.snake_dir = 'R'  # Snake mouvement (initially moving to the right)
 
         # Score
         self.score = 0
@@ -147,8 +145,13 @@ class Game():
     def update_snake(self):
         """Update the snake (moves and grows it)"""
 
+        if self.snake_dir == 'U' : dX = (0,1)
+        elif self.snake_dir == 'D' : dX = (0,-1)
+        elif self.snake_dir == 'R' : dX = (1,0)
+        elif self.snake_dir == 'L' : dX = (-1,0)
+
         snake = self.snake
-        new_head = [snake[-1][0] + self.dX[0], snake[-1][1] + self.dX[1]]
+        new_head = [snake[-1][0] + dX[0], snake[-1][1] + dX[1]]
         snake.append(new_head)
 
         # When snake is not growing, pop the tail
@@ -191,14 +194,14 @@ class Game():
 
             # Updates the snake movement depending on the KEY pressed
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT and self.dX != [1, 0]:
-                    self.dX = [-1, 0]
-                elif event.key == pygame.K_RIGHT and self.dX != [-1, 0]:
-                    self.dX = [1, 0]
-                elif event.key == pygame.K_UP and self.dX != [0, 1]:
-                    self.dX = [0, -1]
-                elif event.key == pygame.K_DOWN and self.dX != [0, -1]:
-                    self.dX = [0, 1]
+                if event.key == pygame.K_LEFT and self.snake_dir != 'R':
+                    self.snake_dir = 'L'
+                elif event.key == pygame.K_RIGHT and self.snake_dir != 'L':
+                    self.snake_dir = 'R'
+                elif event.key == pygame.K_UP and self.snake_dir != 'D':
+                    self.dX = 'U'
+                elif event.key == pygame.K_DOWN and self.snake_dir != 'U':
+                    self.dsnake_dir = 'D'
 
                 elif event.key == pygame.K_RETURN:  # Restart the game
                     self.init_game()
