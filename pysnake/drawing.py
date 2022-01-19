@@ -94,7 +94,7 @@ def draw_end(game):
     draw_snake(game)
     draw_text(game)
 
-    game.pg_display.update()
+    pygame.display.update()
 
 
 def draw_all(game):
@@ -102,4 +102,4 @@ def draw_all(game):
     draw_world(game)
     draw_snake(game)
     draw_text(game)
-    game.pg_display.update()
+    pygame.display.update()

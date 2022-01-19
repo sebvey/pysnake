@@ -145,8 +145,8 @@ class Game():
     def update_snake(self):
         """Update the snake (moves and grows it)"""
 
-        if self.snake_dir == 'U' : dX = (0,1)
-        elif self.snake_dir == 'D' : dX = (0,-1)
+        if self.snake_dir == 'U' : dX = (0,-1)
+        elif self.snake_dir == 'D' : dX = (0,1)
         elif self.snake_dir == 'R' : dX = (1,0)
         elif self.snake_dir == 'L' : dX = (-1,0)
 
@@ -159,7 +159,8 @@ class Game():
             snake.popleft()
 
         # Else the snake is growing, we keep the tail
-        self.snake_growth -= 1
+        else :
+            self.snake_growth -= 1
 
     def collision_detected(self):
         """
@@ -199,9 +200,9 @@ class Game():
                 elif event.key == pygame.K_RIGHT and self.snake_dir != 'L':
                     self.snake_dir = 'R'
                 elif event.key == pygame.K_UP and self.snake_dir != 'D':
-                    self.dX = 'U'
+                    self.snake_dir = 'U'
                 elif event.key == pygame.K_DOWN and self.snake_dir != 'U':
-                    self.dsnake_dir = 'D'
+                    self.snake_dir = 'D'
 
                 elif event.key == pygame.K_RETURN:  # Restart the game
                     self.init_game()
@@ -254,4 +255,4 @@ class Game():
             drawing.draw_all(self)
 
             # Wait still next step
-            self.clock.tick(feat.GAME_FRAMERATE)
+            self.pg_clock.tick(feat.GAME_FRAMERATE)
