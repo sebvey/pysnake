@@ -5,12 +5,8 @@ from pysnake import features as feat
 
 def draw_world(game):
     """Function drawing the world with pygame.
+    - INPUT : A Game instance"""
 
-    - pygame_display is the pygame display object
-
-    - The input world list is structured as follow :
-        * Each element is a line
-        * Each line is a list of characters"""
 
     # Fill the background
     game.pg_display.fill(feat.BACK_COLOR)
@@ -37,10 +33,7 @@ def draw_world(game):
 
 def draw_snake(game):
     """Function drawing the snake with pysnake
-
-   - pygame_display : pygame display object
-   - snake : snake blocks position (deque object)
-    """
+    - INPUT : A Game instance"""
 
     for block in game.snake:
 
@@ -53,11 +46,7 @@ def draw_snake(game):
 
 def draw_text(game):
     """ Function drawing the text information with pygame.
-
-    - pygame_display : the pygame display object
-    - reward : int
-    - reward_alpha : alpha transparency of the font
-    """
+    - INPUT : A Game instance"""
 
     txt_font = pygame.font.SysFont(None, 28)
 
@@ -86,9 +75,7 @@ def draw_text(game):
 
 def draw_end(game):
     """ Function drawing the end message when the game is over
-
-    INPUT : a Game instance
-    """
+    - INPUT : A Game instance"""
 
     draw_world(game)
     draw_snake(game)
@@ -98,6 +85,8 @@ def draw_end(game):
 
 
 def draw_all(game):
+    """Function drawing every elements of the game in pygame
+    - INPUT : a Game instance"""
 
     draw_world(game)
     draw_snake(game)
