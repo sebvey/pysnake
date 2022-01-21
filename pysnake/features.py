@@ -15,7 +15,7 @@ FOOD_COLOR = (204, 51, 255)
 MSG_COLOR = (84, 139, 161)
 GO_COLOR = (224, 150, 45)  # Game Over
 
-BLOCK_SIZE = 20
+BLOCK_SIZE = 16
 
 # Game Parameters
 GAME_FRAMERATE = 15 # speed of the game : framerate (step/s)

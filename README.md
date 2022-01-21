@@ -17,9 +17,16 @@ done as a personal challenge soon.
 
 # Installation
 
-Python >=3.8.5 and pip needed. Create virtual environment with the tool of your choice
-and activate it. Below are instructions to do setup a virtual environment
-assuming pyenv is installed.
+Clone the project and move to the new directory :
+
+```bash
+git clone git@github.com:sebvey/pysnake.git
+cd pysnake
+```
+
+Python >=3.8.5 and pip needed. Create virtual environment with the tool of
+your choice and activate it. Below are instructions to do setup a virtual
+environment assuming pyenv is installed.
 
 Install Python 3.8.5 and create a virtual environment named pysnake :
 
@@ -29,14 +36,9 @@ pyenv virtualenv 3.8.5 pysnake
 
 ```
 
-Clone the project and move to the new directory :
+Activate the virtual environment for the pysnake directory
+and install the package :
 
-```bash
-git clone git@github.com:sebvey/pysnake.git
-cd pysnake
-```
-
-Activate the virtual environment and install the package :
 ```bash
 pyenv local pysnake
 pip3 install -r requirements.txt
@@ -46,5 +48,5 @@ pip3 install .
 # Run Pysnake
 
 ```bash
-pygame-app
+pygame-run
 ```
