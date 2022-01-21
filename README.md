@@ -1,19 +1,18 @@
 # Description
 
-This project is an implementation of the snake game in Python.
-It was first written during the Wagon bootcamp and used as a demo during the
-project presentations.
+This piece of code is an implementation of the snake game in Python.
+It was first written during the Wagon bootcamp and used as a demo when
+presenting our potential projects.
 
-The project was to develop an AI playing the snake game. I planned to use
-Reinforcement Learning to train this AI.
+With this project, I proposed to develop an AI playing the snake game.
+The training of the AI would have been done using Reinforcement Learning.
 
 Reinforcement Learning is the training of machine learning models to make
-a sequence of decisions. The agent learns to achieve a goal in an environment
-This demo was used to demonstrate that the environment was easy to develop.
-Pygame was used for the visual aspect.
+a sequence of decisions. The agent learns to achieve a goal in an environment.
 
-This AI project had not been choosen during the Bootcamp and will probably be
-done as a personal challenge soon.
+This demo was used to demonstrate that the environment was easy to develop.
+Pygame was used for the visual aspect.This AI project had not been choosen
+during the Bootcamp and will probably be done as a personal challenge soon.
 
 # Installation
 
