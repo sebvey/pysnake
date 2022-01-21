@@ -40,6 +40,7 @@ Activate the virtual environment and install the package :
 ```bash
 pyenv local pysnake
 pip3 install -r requirements.txt
+pip3 install .
 ```
 
 # Run Pysnake
