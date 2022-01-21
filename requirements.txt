@@ -1,5 +1,5 @@
-# Packagong
+# Packaging
 setuptools>=26
 
 # Game Engine
-pygame
+pygame>=2.0.0
