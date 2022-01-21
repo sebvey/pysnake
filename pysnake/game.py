@@ -14,7 +14,11 @@ class Game():
     - world : list, Each element is a line, each line is a list of characters
     - snake : snake blocks position (deque object)
     - snake_growth : number of element waiting to be added to the snake
-    - snake_dir : direction of the snake either :
+    - snake_moves : a deque (FIFO stack) used to store the direction :
+        snake_moves[0] : current direction of the snake
+        snake_moves[1] : next direction asked by the user
+        ...
+        A direction is either :
         * 'R' (right)
         * 'L' (left)
         * 'U' (up)
@@ -30,7 +34,6 @@ class Game():
         self.WORLD_PATH = WORLD_PATH
         self.init_game() # game state initialisation
         self.init_pygame() # pygame specific initialisation
-
 
     def add_food(self):
         """

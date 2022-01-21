@@ -1,0 +1,10 @@
+A world is built from a txt file.
+
+The following characters are used :
+
+'X' - Wall
+' ' - empty block
+'.' - empty block that can't be filled with food (unreachable by the snake)
+'S' - initial position of the snake
+'F' - a food element (food is added by the code,
+      no need to place elements on the initial world)
