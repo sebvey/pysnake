@@ -1,2 +1,5 @@
+# Packagong
+setuptools>=26
+
 # Game Engine
 pygame
