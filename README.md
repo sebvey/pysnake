@@ -12,7 +12,7 @@ a sequence of decisions. The agent learns to achieve a goal in an environment.
 
 This demo was used to demonstrate that the environment was easy to develop.
 Pygame was used for the visual aspect.This AI project had not been choosen
-during the Bootcamp and will probably be done as a personal challenge soon.
+during the Bootcamp.
 
 # Installation
 
